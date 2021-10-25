@@ -16,10 +16,12 @@ Funcionalidade: : Realizar comprar
     E clicar em finalizar Comprar
     Entao o pedido deve ser gerado
 
+    #o metodo com cartão está com erro
     Exemplos:
     |cep|cupom|valorProduto|valorTotal|pagamento               |tipo    |formaPagamento      |
     |04857620|FRETEGRATIS|80    |R$ 80,00     |boleto        |principal|false                |
    # |04857620|10OFF      |89    |R$ 80,10  |cartao           |principal|false|
     |04857620|30REAIS    |1750 |R$ 21,00     |PixMercadoPago |principal|false                |
     |04857620|null       |80    |R$ 101,00     |boleto        |principal|true                |
+    |04857620|10OFF      |89    |R$ 101,10  |boleto           |principal|false|
 
