@@ -5,10 +5,9 @@ import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.E;
 import cucumber.api.java.pt.Entao;
 import cucumber.api.java.pt.Quando;
-import pages.PageCarrinho;
-import pages.PageDetalheProduto;
-import pages.PageHome;
-import pages.PageLogin;
+import org.openqa.selenium.support.PageFactoryFinder;
+import pages.*;
+import parametros.PedidoElements;
 import support.BaseSteps;
 import support.SuportWeb;
 
@@ -17,7 +16,10 @@ public class ComprarSteps extends BaseSteps {
     PageLogin pageLogin = new PageLogin(driver);
     PageDetalheProduto pageDetalheProduto= new PageDetalheProduto(driver);
     PageCarrinho pageCarrinho = new PageCarrinho(driver);
+    PageFinalizarComprar finalizarComprar = new PageFinalizarComprar(driver);
+    PagePedido pagePedido = new PagePedido(driver);
     SuportWeb suportWeb = new SuportWeb();
+    
     @Dado("^o usuário acessou o sistema$")
     public void queOUsuárioEstáNaPaginaInicial() { pageHome.acessarSistema();
     }
@@ -44,12 +46,13 @@ public class ComprarSteps extends BaseSteps {
     @E("^aplicar o cupom \"([^\"]*)\"$")
     public void aplicarOCupom(String cupom) throws Throwable {
         pageCarrinho.aplicarCupom(cupom);
-        suportWeb.tempo(3);
+
     }
 
 
     @Entao("^o valor total do produto deve ser \"([^\"]*)\"$")
     public void oValorTotalDoProdutoDeveSer(String valorProduto)  {
+        suportWeb.tempo(4);
         pageCarrinho.validarValorTotal(valorProduto);
 
     }
@@ -57,5 +60,28 @@ public class ComprarSteps extends BaseSteps {
     @E("^clicar em finalizar compra$")
     public void clicarEmFinalizarCompra() {
         pageCarrinho.clicarFinalizarCompra();
+    }
+
+    @E("^escolher endereço \"([^\"]*)\"$")
+    public void escolherEndereço(String escolherEndereco) {
+        finalizarComprar.escolhertipoEndereco(escolherEndereco);
+     
+    }
+
+    @E("^clicar em finalizar Comprar$")
+    public void clicarEmFinalizarComprar() {
+
+        finalizarComprar.clicarFinalizar();
+    }
+
+    @Entao("^o pedido deve ser gerado$")
+    public void oPedidoDeveSerGerado() {
+        pagePedido.validarPedido();
+    }
+
+    @E("^escolher a opção de \"([^\"]*)\" desconto na \"([^\"]*)\"$")
+    public void escolherAOpçãoDeDescontoNa(String opcaoPag, Boolean descotoforma) throws Throwable {
+        finalizarComprar.escolherPagamento(opcaoPag, descotoforma);
+        suportWeb.tempo(3);
     }
 }

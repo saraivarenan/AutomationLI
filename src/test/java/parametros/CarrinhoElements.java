@@ -11,5 +11,6 @@ public class CarrinhoElements {
     public String cupomBtn = "//button[contains(.,'Usar cupom')]";
     public String finalizarComprarBtn =".grande";
     public String valorTotal = ".valor-total";
+    public String radioFormaEnvio = "li:nth-child(2) input";
 
 }
